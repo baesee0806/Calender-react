@@ -2,26 +2,25 @@ import styled from "@emotion/styled";
 import React from "react";
 
 const Calender = () => {
+  const [newDate, setNewDate] = React.useState(new Date());
+  const WEEKDAY = ['일','월','화','수','목','금','토'];
+  let week = WEEKDAY[newDate.getDay()];
+ 
+
   return (
     <CalenderWrapper>
       <YearMonthContainer>
         <div>
           <button>이전</button>
         </div>
-        <div>####년##월</div>
+        <div>{`${newDate.getFullYear()}년 ${newDate.getMonth() + 1}월`}</div>
         <div>
           <button>다음</button>
         </div>
       </YearMonthContainer>
       {/* 요일 */}
       <WeekContainer>
-        <DayDiv>월</DayDiv>
-        <DayDiv>화</DayDiv>
-        <DayDiv>수</DayDiv>
-        <DayDiv>목</DayDiv>
-        <DayDiv>금</DayDiv>
-        <DayDiv>토</DayDiv>
-        <DayDiv>일</DayDiv>
+        {WEEKDAY.map(el=> <DayDiv>{el}</DayDiv>)}
       </WeekContainer>
       {/* 날짜 */}
       <DateContainer>
