@@ -18,6 +18,45 @@ const Calender = () => {
     setNewDate(date)
   }
 
+  const monthList = (newDate: Date) => {
+    const nowYear = newDate.getFullYear();
+    const nowMonth = newDate.getMonth();
+  
+    const dayOneWeek = new Date(nowYear, nowMonth, 1).getDay();
+    const dayLastWeek = new Date(nowYear, nowMonth + 1, 0).getDay();
+  
+    const result: Date[] = [];
+    const prevMonthEnd = new Date(nowYear, nowMonth, 0).getDate();
+    const nowMonthEnd = new Date(nowYear, nowMonth + 1, 0).getDate();
+  
+    for (let i = dayOneWeek - 1; i >= 0; i--) {
+      result.push(new Date(nowYear, nowMonth - 1, prevMonthEnd - i));
+    }
+  
+    for (let i = 1; i <= nowMonthEnd; i++) {
+      result.push(new Date(nowYear, nowMonth, i));
+    }
+  
+    for (let i = 1; i < 7 - dayLastWeek; i++) {
+      result.push(new Date(nowYear, nowMonth + 1, i));
+    }
+  
+    return result;
+  };
+  const allDay: Date[] = monthList(newDate);
+
+  const dateToyyyymmdd = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+  
+    return `${year}${month}${day}`;
+  };
+  
+  console.log(allDay.map((el) => {
+    console.log(dateToyyyymmdd(el).slice(6,8));
+  }));
+  
   return (
     <CalenderWrapper>
       <YearMonthContainer>
@@ -29,7 +68,7 @@ const Calender = () => {
           <button onClick={()=>{changeMonth(1)}}>다음</button>
         </div>
       </YearMonthContainer>
-      {/* 요일 */}
+      {/* 요일 */} 
       <WeekContainer>
         {WEEKDAY.map(el=> <DayDiv>{el}</DayDiv>)}
       </WeekContainer>
